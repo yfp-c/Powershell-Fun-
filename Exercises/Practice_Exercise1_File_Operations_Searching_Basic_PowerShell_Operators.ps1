@@ -54,6 +54,12 @@ Get-ChildItem -File -Recurse -Path $srcpath |
 Rename-Item -Path "C:\TestingPurpose\SubFolder1" -NewName "EvenFilesContainer"
 Rename-Item -Path "C:\TestingPurpose\SubFolder2" -NewName "OddFilesContainer"
 
-$TypeABCList = Get-ChildItem -Recurse "C:\TestingPurpose" | Where {!$_PSIsContainer } | Select FullName
 
-"As of YYYYMMDD HH: MM files inside Testing Purpose are: $TypeABCList" | Out-File -FilePath "C:\TestingPurpose\MasterFile.txt"
+$TypeABCList = Get-ChildItem -Recurse "C:\TestingPurpose" | Where { !$_PSIsContainer } | Select FullName -ExpandProperty FullName
+
+Get-Date -UFormat "%A %B/%d/%Y %T %Z"
+$Time = Get-Date
+$Time.ToUniversalTime()
+
+$TypeABCListtxt = Write-Output "As of" $Time "files inside Testing Purpose are: " $TypeABCList
+$TypeABCListtxt | Out-File -FilePath "C:\TestingPurpose\MasterFile.txt"
