@@ -4,7 +4,7 @@ New-Item "C:\TestingPurpose" -ItemType Directory
 1..50 | foreach {new-item -path C:\TestingPurpose\SubFolder1\TypeATest$_.txt}
 51..100 | foreach {new-item -path C:\TestingPurpose\SubFolder2\TypeBTest$_.txt}
 101..150 | foreach {new-item -path C:\TestingPurpose\SubFolder3\TypeCTest$_.txt}
-101..150 | foreach {remove-item -path C:\TestingPurpose\SubFolder1\TypeCTest$_.txt}
+# 101..150 | foreach {remove-item -path C:\TestingPurpose\SubFolder1\TypeCTest$_.txt}
 
 # $srcpath = "C:\TestingPurpose\SubFolder3"
 # $dstpath = "C:\TestingPurpose\SubFolder2"
@@ -54,12 +54,12 @@ Get-ChildItem -File -Recurse -Path $srcpath |
 Rename-Item -Path "C:\TestingPurpose\SubFolder1" -NewName "EvenFilesContainer"
 Rename-Item -Path "C:\TestingPurpose\SubFolder2" -NewName "OddFilesContainer"
 
-
+# Output contexts of files as a list and output to txt file with correct formatting.
 $TypeABCList = Get-ChildItem -File -Recurse "C:\TestingPurpose" | Where { !$_PSIsContainer } | Select FullName -ExpandProperty FullName
-
 Get-Date -UFormat "%A %B/%d/%Y %T %Z"
-$Time = Get-Date
-$Time.ToUniversalTime()
+$Time = Get-Date -Format G
+$TypeABCListtxt = Write-Output "As of $Time, files inside Testing Purpose are: " $TypeABCList
+$TypeABCListtxt | Out-File -FilePath "C:\TestingPurpose\MasterFile.txt" 
 
-$TypeABCListtxt = Write-Output "As of" $Time "files inside Testing Purpose are: " $TypeABCList
-$TypeABCListtxt | Out-File -FilePath "C:\TestingPurpose\MasterFile.txt"
+# Delete files starting with TypeA
+Get-ChildItem -Recurse "C:\TestingPurpose\" | Where-Object {$_.Name -like '*TypeA*'} | Remove-Item -force
