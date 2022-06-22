@@ -49,3 +49,11 @@ Get-ChildItem -File -Recurse -Path $srcpath |
             }
         }
     }
+
+# Rename folders
+Rename-Item -Path "C:\TestingPurpose\SubFolder1" -NewName "EvenFilesContainer"
+Rename-Item -Path "C:\TestingPurpose\SubFolder2" -NewName "OddFilesContainer"
+
+$TypeABCList = Get-ChildItem -Recurse "C:\TestingPurpose" | Where {!$_PSIsContainer } | Select FullName
+
+"As of YYYYMMDD HH: MM files inside Testing Purpose are: $TypeABCList" | Out-File -FilePath "C:\TestingPurpose\MasterFile.txt"
