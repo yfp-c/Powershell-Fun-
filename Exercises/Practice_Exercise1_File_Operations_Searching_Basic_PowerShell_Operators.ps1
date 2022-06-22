@@ -36,7 +36,7 @@ Get-ChildItem -File -Recurse -Path $srcpath |
         }
     }
 
-#Finding even digits and moving them 
+# Finding even digits and moving them 
 $srcpath = "C:\TestingPurpose"
 $dstpath = "C:\TestingPurpose\SubFolder1"
 Get-ChildItem -File -Recurse -Path $srcpath |
