@@ -55,7 +55,7 @@ Rename-Item -Path "C:\TestingPurpose\SubFolder1" -NewName "EvenFilesContainer"
 Rename-Item -Path "C:\TestingPurpose\SubFolder2" -NewName "OddFilesContainer"
 
 
-$TypeABCList = Get-ChildItem -Recurse "C:\TestingPurpose" | Where { !$_PSIsContainer } | Select FullName -ExpandProperty FullName
+$TypeABCList = Get-ChildItem -File -Recurse "C:\TestingPurpose" | Where { !$_PSIsContainer } | Select FullName -ExpandProperty FullName
 
 Get-Date -UFormat "%A %B/%d/%Y %T %Z"
 $Time = Get-Date
