@@ -12,7 +12,7 @@ $count=0
     switch($Choice){
         0 {write-host "Changing values..`n"
             foreach ($key in $keys) {
-                $targetnode = $XMLFile.SelectSingleNode("//config/Settingsapp/add[@tag='Instructional:Negative'][@value]")
+                $targetnode = $XMLFile.SelectSingleNode("//config/Settingsapp/add[@tag='$key'][@value]")
                 $targetnode.SetAttribute("value", $values[$count])
                 write-host "$count. $key value changed to" $values[$count]
                 $count++
@@ -21,7 +21,7 @@ $count=0
         }
         1 {write-host "Checking values...`n"
             foreach ($key in $keys) {
-                $targetnode = $XMLFile.SelectSingleNode("//config/Settingsapp/add[@tag='Instructional:Negative'][@value]")
+                $targetnode = $XMLFile.SelectSingleNode("//config/Settingsapp/add[@tag='$key'][@value]")
                 Write-Output "$($targetnode.OuterXML)"    
             }
         }
