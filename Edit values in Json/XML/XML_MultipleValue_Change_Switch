@@ -1,0 +1,52 @@
+#Powershell V4
+
+$XMLfilepath = "C:\Profile\Desktop\file.config"
+$XMLFile = [xml](Get-Content $XMLfilepath)
+$keys = ("Host", "Port", "Manager", "Channel", "User")
+$values_69 = ("int.net", "00001", "b69", "Bravo.T69.TS", "dxd")
+$values_699 = ("int.net", "00002", "b699", "Bravo.T699.TS", "dxd")
+$values_6999 = ("int.net", "00003", "b6999", "Bravo.T6999.TS", "dxd")
+$count=0
+    $Title = "Please select from the choices below:"
+    $Prompt = "Would you like to change the values, check the values or quit?"
+    $Choices = [System.Management.Automation.Host.ChoiceDescription[]] @("&1 Change Values to b69", "&2 Edit Values to b699", "&3 Configure Values to b6999","&Values Check", "&Quit")
+    $Default = 3
+        # Prompt for the choice
+    $Choice = $host.UI.PromptForChoice($Prompt,$Title,$Choices, $Default)
+    switch($Choice){
+        0 {write-host "Changing values to b69...`n"
+            foreach ($key in $keys) {
+                $targetnode = $XMLFile.SelectSingleNode("//configuration/appSettings/add[@key='$key'][@value]")
+                $targetnode.SetAttribute("value", $values_69[$count])
+                write-host "$count. $key value changed to" $values_69[$count]
+                $count++
+             }
+             $XMLFile.Save($XMLfilepath)
+        }
+        1 {write-host "Changing values to b699...`n"
+            foreach ($key in $keys) {
+                $targetnode = $XMLFile.SelectSingleNode("//configuration/appSettings/add[@key='$key'][@value]")
+                $targetnode.SetAttribute("value", $values_699[$count])
+                write-host "$count. $key value changed to" $values_699[$count]
+                $count++
+             }
+             $XMLFile.Save($XMLfilepath)
+        }
+        2 {write-host "Changing values to b6999...`n"
+            foreach ($key in $keys) {
+                $targetnode = $XMLFile.SelectSingleNode("//configuration/appSettings/add[@key='$key'][@value]")
+                $targetnode.SetAttribute("value", $values_6999[$count])
+                write-host "$count. $key value changed to" $values_6999[$count]
+                $count++
+             }
+             $XMLFile.Save($XMLfilepath)
+        }              
+        3 {write-host "Checking values...`n"
+                foreach ($key in $keys) {
+                    $targetnode = $XMLFile.SelectSingleNode("//configuration/appSettings/add[@key='$key'][@value]")
+                    write-output "$($targetnode.OuterXML)"
+                    }                
+                }
+ 
+        4 {exit}
+    }
