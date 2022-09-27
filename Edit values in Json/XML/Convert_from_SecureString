@@ -1,0 +1,29 @@
+#PowerShell V5
+$PlaintextPassword = ConvertFrom-SecureString -AsPlainText $SecurePassword
+$plainTextPassword = [Net.NetworkCredential]::new('', $SecurePassword).Password
+write-host $plaintextPassword
+ 
+#PowerShell V4
+$NewVariable = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
+$PlaintextPassword = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($NewVariable)
+write-output $PlaintextPassword
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-ChildItem "C:\Secure_passwords\testpasswords" -Filter "*.txt" |
+ForEach-Object{
+if($_ -match "pass")
+{
+    Write-Host "Success"
+    $content = Get-Content $_.FullName
+    write-host $content
+    $secureObject = ConvertTo-SecureString -String $content
+    $decrypted = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureObject)
+    $decrypted = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($decrypted)
+    $decrypted
+}
+else
+{
+    Write-Host "Fail"
+}
+}
